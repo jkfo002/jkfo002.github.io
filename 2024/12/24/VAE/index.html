@@ -1,0 +1,641 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="jkfo-notebook" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="jkfo-notebook" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="jkfo-notebook" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="Mechine learning,VAE" />
+
+
+<link rel="canonical" href="http://example.com/2024/12/24/VAE/">
+
+
+
+  <title>
+VAE - Mechine learning |
+JKFO001 = jkfo-notebook</title>
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">VAE
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2024-12-24 10:39:33">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2024-12-24T10:39:33+08:00">2024-12-24</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">JKFO001</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://www.loliapi.com/acg/pc/?169793"></li>
+          <li class="item" data-background-image="https://www.loliapi.com/acg/pc/?818296"></li>
+          <li class="item" data-background-image="https://www.loliapi.com/acg/pc/?572943"></li>
+          <li class="item" data-background-image="https://www.loliapi.com/acg/pc/?618606"></li>
+          <li class="item" data-background-image="https://www.loliapi.com/acg/pc/?576745"></li>
+          <li class="item" data-background-image="https://www.loliapi.com/acg/pc/?290671"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/Mechine-learning/" itemprop="item" rel="index" title="In Mechine learning"><span itemprop="name">Mechine learning</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/24/VAE/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="jkfo">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="jkfo-notebook">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="vae"><a class="markdownIt-Anchor" href="#vae">#</a> VAE</h1>
+<p>VAE（变分自编码器， Variational Autoencoders），生成式模型</p>
+<p>看明白 VAE 需要了解降维的概念，以 PCA 作为例子，并展示 VAE 与 PCA 之间的关系。</p>
+<h2 id="降维"><a class="markdownIt-Anchor" href="#降维">#</a> 降维</h2>
+<h3 id="什么是降维"><a class="markdownIt-Anchor" href="#什么是降维">#</a> <strong>什么是降维？</strong></h3>
+<blockquote>
+<p>在机器学习中，<strong>降维是减少描述数据的特征数量的过程</strong>。可以通过<strong>选择</strong>（仅保留一些现有特征）或通过<strong>提取</strong>（基于旧特征组合来生成数量更少的新特征）来进行降维。降维在许多需要低维数据的场景中很有用。尽管有许多不同的降维方法，但是我们可以构建一个适用于大多数方法的总体框架。</p>
+</blockquote>
+<p>首先，我们称<strong>编码器（Encoder）<strong>为从 “旧特征” 表示中产生 “新特征” 表示（通过选择或提取）的过程，然后将其逆过程称为</strong>解码（Decoder）</strong>。降维可以被理解为数据压缩，其中编码器压缩数据（从初始空间到<strong>编码空间</strong>，也称为<strong>隐空间</strong>，latent sapce），而解码器则用于解压缩。当然，根据初始数据分布、隐空间大小和编码器的选择，压缩可能是有损的，即<strong>一部分信息会在编码过程中丢失，并且在解码时无法恢复</strong>，产生的损失为<strong>重构误差</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">pro1(Initial data)</span><br><span class="line">pro2&#123;Encoder&#125;</span><br><span class="line">pro3(encoded data隐空间)</span><br><span class="line">pro4&#123;Decoder&#125;</span><br><span class="line">pro5(encoded-decoded data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pro1 --&gt; pro2</span><br><span class="line">pro2 --&gt; pro3</span><br><span class="line">pro3 --&gt; pro4</span><br><span class="line">pro4 --&gt; pro5</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">classDef default fill: #EEE8AA, stroke: #333, stroke-width: 4px;</span><br><span class="line">classDef en-decoder fill:#FF6347,  stroke: #333, stroke-width: 4px;</span><br><span class="line"></span><br><span class="line">class pro2 en-decoder</span><br><span class="line">class pro4 en-decoder</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>优化目标：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><mi>e</mi><mo separator="true">,</mo><mi>d</mi><mo stretchy="false">)</mo><mo>=</mo><mi>a</mi><mi>r</mi><mi>g</mi><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false">(</mo><mi>ϵ</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>d</mi><mo stretchy="false">(</mo><mi>e</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(e, d)=argmin(\epsilon(x, d(e(x))))
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">d</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">m</span><span class="mord mathnormal">i</span><span class="mord mathnormal">n</span><span class="mopen">(</span><span class="mord mathnormal">ϵ</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
+<p>其中 x 为输入数据，d (e (x)) 为降维数据，(e, d) 为重构误差</p>
+<h2 id="pca"><a class="markdownIt-Anchor" href="#pca">#</a> <strong>PCA</strong></h2>
+<p>PCA 是构建 n<sub>e</sub> 个新的<strong>独立</strong>特征，这些特征是 n<sub>d</sub> 个<strong>旧特征的线性组合</strong>，并使得这些新特征所定义的子空间上的数据投影尽可能接近初始数据（就欧几里得距离而言）。换句话说，PCA 寻找初始空间的最佳线性子空间（由新特征的正交基定义），以使投影到该子空间上的近似数据的误差尽可能小。</p>
+<p>SVD 求解（略）</p>
+<h2 id="自编码器"><a class="markdownIt-Anchor" href="#自编码器">#</a> <strong>自编码器</strong></h2>
+<p><strong>自编码器</strong>总体思路非常简单，主要包括用<strong>神经网络来作为编码器和解码器</strong>，并使用迭代优化学习最佳的<strong>编码 - 解码方案</strong>。因此，在每次迭代中，我们向自编码器结构（编码器后跟解码器）提供一些数据，我们将编码再解码后的输出与初始数据进行比较，并通过<strong>反向传播误差</strong>来更新网络的权重。</p>
+<p>因此，直观地讲，整个自编码器结构（编码器 + 解码器）会构造出<strong>数据瓶颈（bottleneck）</strong>，从而确保只有信息的主要部分可以通过瓶颈并进行重构。</p>
+<p>从我们的总体框架来看，考虑的<strong>编码器 E</strong> 由编码器网络结构定义，<strong>解码器族 D</strong> 由解码器网络结构定义，而<strong>重构误差</strong>的减小则通过对编码器和解码器参数进行梯度下降来进行。</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>l</mi><mi>o</mi><mi>s</mi><mi>s</mi><mo>=</mo><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>−</mo><mi>d</mi><mo stretchy="false">(</mo><mi>e</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><msup><mi mathvariant="normal">∣</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">loss = ||x-d(e(x))||^2
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal">s</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span><span class="mord">∣</span><span class="mord"><span class="mord">∣</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>让我们<strong>首先假设编码器和解码器网络结构都只有一层且没有非线性</strong>（即考虑的是线性自编码器）。</p>
+<p>这样的编码器和解码器是简单的线性变换，可以用矩阵表示。</p>
+<p>在这种情况下，某种意义上，我们可以看到与 PCA 的明显的关联，就像 PCA 中一样，我们正在寻找<strong>最佳的线性子空间</strong>来投影数据，并且使信息损失尽可能少。</p>
+<p>用 PCA 获得的编码和解码矩阵自然地也是梯度下降所能得到的一种解决方案，但是我们应该指出，这不是唯一的解决方案。实际上，<strong>可以选择几组不同的基向量来描述相同的最佳子空间</strong>，因此，几个不同的编码器 / 解码器对都可以提供最小的重构误差。此外，与 PCA 不同，对于线性自编码器，我们最终获得的新特征不必是独立的（<strong>神经网络中没有正交性约束，VAE 得出的基也不必是正交的</strong>）</p>
+<p>现在，让我们进一步假设编码器和解码器都是<strong>深度非线性网络</strong>的。在这种情况下，网络结构越复杂，自编码器就可以进行更多的降维，同时保持较低的重构损失。</p>
+<p>但是我们应该牢记两点。首先，在没有重建损失的情况下进行重要的降维通常会带来一个代价：隐空间中缺乏可解释和可利用的结构（<strong>缺乏规则性，lack of regularity</strong>）。其次，大多数时候，降维的最终目的不仅是减少数据的维数，而是要在减少维数的同时将数据主要的结构信息保留在简化的表示中。出于这两个原因，必须根据降维的最终目的来仔细控制和调整隐空间的大小和自编码器的 “深度”（深度定义压缩的程度和质量）。</p>
+<h2 id="变分自编码器vae"><a class="markdownIt-Anchor" href="#变分自编码器vae">#</a> 变分自编码器（VAE）</h2>
+<p><strong>自编码器用于内容生成的局限性</strong></p>
+<p>此时，自然会想到一个问题：“自编码器和内容生成之间的联系是什么？”。确实，一旦对自编码器进行了训练，我们既有编码器又有解码器，但是仍然没有办法来产生任何新内容。乍一看，我们可能会认为，如果隐空间足够规则（在训练过程中被编码器很好地 “组织” 了），我们可以从该隐空间中随机取一个点并将其解码以获得新的内容，就像生成对抗网络中的生成器一样。但是！自编码器的隐空间的规则性是一个难点，它取决于初始空间中数据的分布、隐空间的大小和编码器的结构。因此，很难先验地确保编码器以与我们刚刚描述的生成过程兼容的方式智能地组织隐空间。</p>
+<p><strong>自编码器仅以尽可能少的损失为目标进行训练，而不管隐空间如何组织</strong>。因此，如果我们对架构的定义不小心，那么在训练过程中，网络很自然地会利用任何过拟合的可能性来尽可能地完成其任务…… 除非我们明确对其进行规范化！</p>
+<blockquote>
+<p>潜在空间值形成不规则的、无界的分布，会使随机点采样变得困难。</p>
+<p>不同图像类别的潜在表示可能在大小上有所不同，导致模型生成某些类别的频率比其他类别高得多。</p>
+<p>传统的自编码器学习的潜在空间不是连续的。</p>
+<p>使用传统自编码器作为生成模型存在三个问题：不知道如何从一个不规则的、无界的空间中采样，一些类可能在潜空间中被过度表示，学习空间是不连续的，这使得很难找到一个点将解码成一个良好的图像。所以这时候变分自编码器出现了。</p>
+</blockquote>
+<p><strong>变分自编码器的定义</strong></p>
+<p>隐空间足够规则。获得这种规律性的一种可能方案是在训练过程中引入显式的<strong>正规化（regularisation）</strong>。</p>
+<p>因此，变分自编码器可以定义为一种自编码器，其训练经过<strong>正规化以避免过度拟合</strong>，并确保隐空间具有能够进行数据生成过程的良好属性。</p>
+<p><strong>不是将输入编码为隐空间中的单个点，而是将其编码为隐空间中的概率分布（连续性与规则性）</strong></p>
+<blockquote>
+<ul>
+<li>首先，将输入编码为在隐空间上的分布；</li>
+<li>第二，从该分布中采样隐空间中的一个点；</li>
+<li>第三，对采样点进行解码并计算出重建误差；</li>
+<li>最后，重建误差通过网络反向传播。</li>
+</ul>
+</blockquote>
+<p><strong>变分自编码器把原始数据编码为隐空间中的分布，在解码时是从该分布中采样一个点来进行解码</strong></p>
+<p>实践中，选择正态分布作为编码的分布，使得我们可以训练编码器来返回描述高斯分布的均值和协方差矩阵。将输入编码为具有一定方差而不是单个点的分布的原因是这样可以非常自然地表达隐空间规则化：<strong>编码器返回的分布被强制接近标准正态分布</strong>。</p>
+<p>此时的 Loss 为</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>l</mi><mi>o</mi><mi>s</mi><mi>s</mi><mo>=</mo><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>−</mo><mi>d</mi><mo stretchy="false">(</mo><mi>e</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><msup><mi mathvariant="normal">∣</mi><mn>2</mn></msup><mo>+</mo><mi>K</mi><mi>L</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">(</mo><mi>μ</mi><mo separator="true">,</mo><mi>σ</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">loss = ||x-d(e(x))||^2 + KL(N(\mu, \sigma), N(0,1))
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal">s</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mopen">(</span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span><span class="mord">∣</span><span class="mord"><span class="mord">∣</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal">μ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
+<p>KL 散度又称为相对熵，两个概率分布 P 和 Q 差别的非对称性的度量。 KL 散度是用来度量使用基于 Q 的分布来编码服从 P 的分布的样本所需的额外的平均比特数。典型情况下，P 表示数据的真实分布，Q 表示数据的理论分布、估计的模型分布、或 P 的近似分布，其定义为</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>K</mi><mi>L</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>q</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mo>∑</mo><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>l</mi><mi>o</mi><mi>g</mi><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow></mrow><annotation encoding="application/x-tex">KL(p(x), q(x)) = \sum{p(x)log\frac{p(x)}{q(x)}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mop op-symbol large-op" style="position:relative;top:-0.000004999999999977245em;">∑</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span></p>
+<p><strong>关于正则化的直观解释</strong></p>
+<p>我们期望隐空间具有规则性，这可以通过两个主要属性表示：<strong>连续性</strong>（continuity，隐空间中的两个相邻点解码后不应呈现两个完全不同的内容）和<strong>完整性</strong>（completeness，针对给定的分布，从隐空间采样的点在解码后应提供 “有意义” 的内容）。</p>
+<p>VAE 将输入编码为<strong>分布</strong>而不是点不足以确保连续性和完整性。如果没有明确定义的正则化项，则模型可以学习最小化其重构误差，从而 “忽略” 要返回一个分布，最终表现得几乎像普通自编码器一样（导致过度拟合）。具体地说，编码器可以返回具有微小方差的分布（往往是点分布，punctual distributions），或者返回具有巨大均值差异的分布（数据在隐空间中彼此相距很远）。在这两种情况下，返回分布的限制都没有取得效果，并且不满足连续性和 / 或完整性。</p>
+<h2 id="vae-数学细节"><a class="markdownIt-Anchor" href="#vae-数学细节">#</a> VAE 数学细节</h2>
+<p>x 为数据变量，z 为潜变量，由 encoder 生成，则有</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mtext>从先验分布</mtext><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mtext>采样隐空间</mtext><mi>z</mi><mtext>；</mtext><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mtext>由条件概率</mtext><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>z</mi><mo stretchy="false">)</mo><mtext>采样</mtext><mi>x</mi></mrow><annotation encoding="application/x-tex">(1) 从先验分布p(x)采样隐空间z；
+(2) 由条件概率p(x|z)采样x
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span><span class="mord cjk_fallback">从</span><span class="mord cjk_fallback">先</span><span class="mord cjk_fallback">验</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">布</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mord cjk_fallback">采</span><span class="mord cjk_fallback">样</span><span class="mord cjk_fallback">隐</span><span class="mord cjk_fallback">空</span><span class="mord cjk_fallback">间</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mord cjk_fallback">；</span><span class="mopen">(</span><span class="mord">2</span><span class="mclose">)</span><span class="mord cjk_fallback">由</span><span class="mord cjk_fallback">条</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">概</span><span class="mord cjk_fallback">率</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mord cjk_fallback">采</span><span class="mord cjk_fallback">样</span><span class="mord mathnormal">x</span></span></span></span></span></p>
+<p>在这种概率模型下，我们可以重新定义编码器和解码器的概念。实际上，与考虑使用确定性编码器和解码器的简单自编码器不同，我们现在将考虑这两个对象的概率版本。</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>概率解码器</mtext><mo>:</mo><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>z</mi><mo stretchy="false">)</mo><mtext>描述由给定已经编码的变量到解码变量的分布</mtext><mo stretchy="false">(</mo><mtext>由</mtext><mi>z</mi><mtext>到</mtext><mi>x</mi><mo stretchy="false">)</mo><mtext>由潜变量空间到原始数据空间（解码）的映射</mtext></mrow><annotation encoding="application/x-tex">概率解码器:p(x|z) 描述由给定已经编码的变量到解码变量的分布 (由z到x) 由潜变量空间到原始数据空间（解码）的映射
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">概</span><span class="mord cjk_fallback">率</span><span class="mord cjk_fallback">解</span><span class="mord cjk_fallback">码</span><span class="mord cjk_fallback">器</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mord cjk_fallback">描</span><span class="mord cjk_fallback">述</span><span class="mord cjk_fallback">由</span><span class="mord cjk_fallback">给</span><span class="mord cjk_fallback">定</span><span class="mord cjk_fallback">已</span><span class="mord cjk_fallback">经</span><span class="mord cjk_fallback">编</span><span class="mord cjk_fallback">码</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">到</span><span class="mord cjk_fallback">解</span><span class="mord cjk_fallback">码</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">布</span><span class="mopen">(</span><span class="mord cjk_fallback">由</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mord cjk_fallback">到</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mord cjk_fallback">由</span><span class="mord cjk_fallback">潜</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">空</span><span class="mord cjk_fallback">间</span><span class="mord cjk_fallback">到</span><span class="mord cjk_fallback">原</span><span class="mord cjk_fallback">始</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">据</span><span class="mord cjk_fallback">空</span><span class="mord cjk_fallback">间</span><span class="mord cjk_fallback">（</span><span class="mord cjk_fallback">解</span><span class="mord cjk_fallback">码</span><span class="mord cjk_fallback">）</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">映</span><span class="mord cjk_fallback">射</span></span></span></span></span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>概率编码器</mtext><mo>:</mo><mi>p</mi><mo stretchy="false">(</mo><mi>z</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo><mtext>描述由给定数据变量（原始）到编码变量的分布</mtext><mo stretchy="false">(</mo><mtext>由</mtext><mi>x</mi><mtext>到</mtext><mi>z</mi><mo stretchy="false">)</mo><mtext>由原始数据空间到潜变量空间的映射</mtext></mrow><annotation encoding="application/x-tex">概率编码器:p(z|x) 描述由给定数据变量（原始）到编码变量的分布 (由x到z) 由原始数据空间到潜变量空间的映射
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">概</span><span class="mord cjk_fallback">率</span><span class="mord cjk_fallback">编</span><span class="mord cjk_fallback">码</span><span class="mord cjk_fallback">器</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mord cjk_fallback">描</span><span class="mord cjk_fallback">述</span><span class="mord cjk_fallback">由</span><span class="mord cjk_fallback">给</span><span class="mord cjk_fallback">定</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">据</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">（</span><span class="mord cjk_fallback">原</span><span class="mord cjk_fallback">始</span><span class="mord cjk_fallback">）</span><span class="mord cjk_fallback">到</span><span class="mord cjk_fallback">编</span><span class="mord cjk_fallback">码</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">布</span><span class="mopen">(</span><span class="mord cjk_fallback">由</span><span class="mord mathnormal">x</span><span class="mord cjk_fallback">到</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mord cjk_fallback">由</span><span class="mord cjk_fallback">原</span><span class="mord cjk_fallback">始</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">据</span><span class="mord cjk_fallback">空</span><span class="mord cjk_fallback">间</span><span class="mord cjk_fallback">到</span><span class="mord cjk_fallback">潜</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">空</span><span class="mord cjk_fallback">间</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">映</span><span class="mord cjk_fallback">射</span></span></span></span></span></p>
+<p>在简单的自编码器中所缺乏的对隐空间的正则化自然出现在数据生成过程的定义中（贝叶斯）：我们假设隐空间中的编码表示 z，遵循先验分布 p (z)。由<strong>贝叶斯推理问题</strong>：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>z</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>z</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow><mrow><mi>q</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>z</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow><mrow><mo>∫</mo><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>u</mi><mo stretchy="false">)</mo><mi>p</mi><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mi>d</mi><mi>u</mi></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">p(z|x)=\frac{p(x|z)p(z)}{q(x)}=\frac{p(x|z)p(z)}{\int{p(x|u)p(u)du}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.42812em;vertical-align:-1.00112em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.305em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord mathnormal">u</span><span class="mclose">)</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">u</span><span class="mclose">)</span><span class="mord mathnormal">d</span><span class="mord mathnormal">u</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.00112em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>其中 p (z) 标准高斯分布；p (x|z) 高斯分布，均值由变量 z 的确定性函数 f 定义 (f 属于记为 F 的函数族)，协方差矩阵形式为正常数 c*I，I 为单位矩阵</p>
+<p>则有：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>∼</mo><mi>N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>I</mi><mo stretchy="false">)</mo><mo separator="true">;</mo><mspace linebreak="newline"></mspace><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>z</mi><mo stretchy="false">)</mo><mo>∼</mo><mi>N</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>c</mi><mi>I</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(z)\sim N(0,I);\\
+p(x|z)\sim N(f(z),cI)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">)</span><span class="mpunct">;</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">)</span></span></span></span></span></p>
+<p>而对于高维度的” 证据 “（归一化因子），常规计算方法比较困难，因此采用<strong>变分推理</strong>的方法进行近似计算。<s>直接由贝叶斯难以计算，就换个方法</s>。</p>
+<p><strong>变分推理公式</strong></p>
+<p>变分推论（VI）是一种近似复杂分布的技术。这个想法是要设置一个参数化的分布族（例如高斯族，其参数是均值和协方差），并在该族中寻找目标分布的最佳近似。该族中最好的对象是使给定的近似误差测量值最小化的元素（大多数情况下是近似分布与目标分布之间的<strong> Kullback-Leibler 散度</strong>），并通过对该族的参数进行梯度下降来发现。</p>
+<p>此处，通过高斯分布 q<sub>x</sub> (z) 近似 p (z|x)，其均值与方差由 g 与 h 定义，分别属于函数族 G 与 H。</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>q</mi><mi>x</mi></msub><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>∼</mo><mi>N</mi><mo stretchy="false">(</mo><mi>g</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>h</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">q_x(z)\sim N(g(x), h(x))
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
+<p>现在则需要通过优化 g 与 h 最小化 q<sub>x</sub> (z) 与 p (z|x) 之间的 KL 散度，从而找到该族中的最佳近似。</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.24999999999999992em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo stretchy="false">(</mo><msup><mi>g</mi><mo>∗</mo></msup><mo separator="true">,</mo><msup><mi>h</mi><mo>∗</mo></msup><mo stretchy="false">)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mi>a</mi><mi>r</mi><mi>g</mi><mi>m</mi><mi>i</mi><mi>n</mi><mtext> </mtext><mi>K</mi><mi>L</mi><mo stretchy="false">(</mo><msub><mi>q</mi><mi>x</mi></msub><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>p</mi><mo stretchy="false">(</mo><mi>z</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mi>a</mi><mi>r</mi><mi>g</mi><mi>m</mi><mi>a</mi><mi>x</mi><mtext> </mtext><mo stretchy="false">(</mo><msub><mi>E</mi><mrow><mi>z</mi><mtext> </mtext><mi>q</mi><mi>x</mi></mrow></msub><mo stretchy="false">(</mo><mi>l</mi><mi>o</mi><mi>g</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>−</mo><mi>K</mi><mi>L</mi><mo stretchy="false">(</mo><msub><mi>q</mi><mi>x</mi></msub><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>p</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mi>a</mi><mi>r</mi><mi>g</mi><mi>m</mi><mi>a</mi><mi>x</mi><mtext> </mtext><msub><mi>E</mi><mrow><mi>z</mi><mtext> </mtext><mi>q</mi><mi>x</mi></mrow></msub><mo stretchy="false">(</mo><mo>−</mo><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>x</mi><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><mi>z</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mi mathvariant="normal">∣</mi></mrow><mrow><mn>2</mn><mi>c</mi></mrow></mfrac><mo>−</mo><mi>K</mi><mi>L</mi><mo stretchy="false">(</mo><msub><mi>q</mi><mi>x</mi></msub><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>p</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+(g^*, h^*)&amp;=argmin~KL(q_x(z),p(z|x))\\
+&amp;=argmax~(E_{z~qx}(log(p(x|z))-KL(q_x(z),p(z))))\\
+&amp;= argmax~E_{z~qx}(-\frac{|x-f(z)^2|}{2c}-KL(q_x(z),p(z)))
+\end{aligned}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:5.477108em;vertical-align:-2.4885540000000006em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.9885539999999997em;"><span style="top:-5.6396619999999995em;"><span class="pstrut" style="height:3.491108em;"></span><span class="mord"><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.738696em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.738696em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span><span style="top:-4.1396619999999995em;"><span class="pstrut" style="height:3.491108em;"></span><span class="mord"></span></span><span style="top:-1.9885539999999997em;"><span class="pstrut" style="height:3.491108em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.4885540000000006em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.9885539999999997em;"><span style="top:-5.6396619999999995em;"><span class="pstrut" style="height:3.491108em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">m</span><span class="mord mathnormal">i</span><span class="mord mathnormal">n</span><span class="mspace nobreak"> </span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span></span></span><span style="top:-4.1396619999999995em;"><span class="pstrut" style="height:3.491108em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">m</span><span class="mord mathnormal">a</span><span class="mord mathnormal">x</span><span class="mspace nobreak"> </span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span><span class="mspace nobreak mtight"><span class="mtight"> </span></span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mclose">)</span><span class="mclose">)</span><span class="mclose">)</span></span></span><span style="top:-1.9885539999999997em;"><span class="pstrut" style="height:3.491108em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">m</span><span class="mord mathnormal">a</span><span class="mord mathnormal">x</span><span class="mspace nobreak"> </span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span><span class="mspace nobreak mtight"><span class="mtight"> </span></span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">−</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal">c</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.4885540000000006em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>等价过程略</p>
+<p>等价过程倒数第二个方程中，存在一个权衡点 —— 最大化 “观测” 的可能性（第一项，【重构出的样本的】预期对数似然概率的最大）与接近先验分布（第二项 q<sub>x</sub> (z) 与 p (z) 之间 KL 散度最小）。</p>
+<p>由上 (<strong>p (x|z) 高斯分布，均值由变量 z 的确定性函数 f 定义 (f 属于记为 F 的函数族)，协方差矩阵形式为正常数 c*I</strong>)，当由确定 f 时，可以近似 p (z|x)。</p>
+<blockquote>
+<p>感觉变分推理的意义在于绕过贝叶斯，使用近似的方法求解 p (z|x)。q<sub>x</sub> (z) 已知。</p>
+</blockquote>
+<p>但是实际上，定义解码器的函数 f 是未知的，而且也需要求解。但我们最初的目标是找到一种性能良好的编码 / 解码方案，其隐空间又足够规则，可以用于生成目的。如果规则性主要由在隐空间上假定的先验分布所决定，则整个编码 - 解码方案的性能高度取决于函数 f 的选择。</p>
+<p><strong>p (z|x) 可以从 p (z) 与 p (x|z) 近似（上述数学推理），而 p (z) 为简单的标准高斯模型，优化 c（协方差）与 f（分布均值）</strong>，</p>
+<p>则对于属于 F 函数族的任一函数 f（定义一个解码器 p (x|z))，都可以得到编码器 p (x|z) 的最佳近似 q<sub>x</sub><sup>*</sup>(z)。无论他的特性如何，但我们正在寻找一种尽可能高效的编码 - 解码方案，然后，当给定从 q<sub>x</sub><sup>*</sup>(z) 采样的 z 时，希望选择函数 f 使得 x 的期望对数似然最大（<strong>变分推理的权衡</strong>）</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><msup><mi>f</mi><mo>∗</mo></msup><mo separator="true">,</mo><msup><mi>g</mi><mo>∗</mo></msup><mo separator="true">,</mo><msup><mi>h</mi><mo>∗</mo></msup><mo stretchy="false">)</mo><mo>=</mo><mi>a</mi><mi>r</mi><mi>g</mi><mi>m</mi><mi>a</mi><mi>x</mi><mtext> </mtext><msub><mi>E</mi><mrow><mi>z</mi><mtext> </mtext><mi>q</mi><mi>x</mi></mrow></msub><mo stretchy="false">(</mo><mo>−</mo><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>x</mi><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><mi>z</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mi mathvariant="normal">∣</mi></mrow><mrow><mn>2</mn><mi>c</mi></mrow></mfrac><mo>−</mo><mi>K</mi><mi>L</mi><mo stretchy="false">(</mo><msub><mi>q</mi><mi>x</mi></msub><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>p</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(f^*,g^*,h^*) = argmax~E_{z~qx}(-\frac{|x-f(z)^2|}{2c}-KL(q_x(z),p(z)))
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.738696em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.738696em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.738696em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.177108em;vertical-align:-0.686em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">m</span><span class="mord mathnormal">a</span><span class="mord mathnormal">x</span><span class="mspace nobreak"> </span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span><span class="mspace nobreak mtight"><span class="mtight"> </span></span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">−</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal">c</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal">L</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
+<p>目标函数中可得到直观描述的元素：x 与 f (z) 之间的重构误差 以及 q<sub>x</sub> (z) 与 p (z) 之间的 KL 散度的正则项，常数 c 则决定了前两个条件之间的平衡越高，我们对模型中的概率解码器假设 p (x|z) 周围的方差就越大，我们也就越关注正则化项。</p>
+<p><strong>神经网络引入模型</strong></p>
+<p>目前为止，我们已经建立了一个依赖于三个函数 f,g,h 的概率模型，并使用变分推理表示要解决的优化问题，以便获得能够给出最优值的 f<sup>*</sup>,g<sup>*</sup>,h<sup>*</sup></p>
+<p>由于我们无法轻松地在函数的整个空间上进行优化，因此我们限制了优化域，并决定将 f,g,h 用神经网络来定义。</p>
+<p><strong>编码器（p (z|x)）</strong></p>
+<p>因此 F,G,H 分别对应于网络体系结构定义的函数族，并且将对这些网络的参数进行优化。</p>
+<p>实际上，g 与 h 不是两个完全独立的网络定义的，而是共享它们的一部分结构和权重，因此我们可以，</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>g</mi><mn>2</mn></msub><mo stretchy="false">(</mo><msub><mi>g</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo separator="true">;</mo><mspace linebreak="newline"></mspace><mi>h</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>h</mi><mn>2</mn></msub><mo stretchy="false">(</mo><msub><mi>h</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo separator="true">;</mo><mspace linebreak="newline"></mspace><msub><mi>g</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>h</mi><mn>1</mn></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g(x)=g_2(g_1(x));\\
+h(x)=h_2(h_1(x));\\
+g_1(x)=h_1(x)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span><span class="mpunct">;</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span><span class="mpunct">;</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></span></p>
+<p>因为 h 定义了 q<sub>x</sub> (z) 的协方差矩阵，所以 h (x) 为方阵，但是，为了简化计算并减 g 少参数的数量，我们做出了额外的假设，即 p (z|x) 的近似 q<sub>x</sub><sup>*</sup>(z) 是具有对角协方差矩阵的多维高斯分布（变量独立性假设）。在此假设下，h (x) 只是协方差矩阵对角元素的向量，因此其大小与 g (x) 相同。但是，我们以这种方式减少了我们用于变分推断的分布族，因此，对 p (z|x) 的近似可能不太准确。</p>
+<blockquote>
+<p>第一个重点是<strong>编码器</strong>获得均值和协方差的网络共享了一部分权重。</p>
+<p>第二个重点是<strong>协方差矩阵被简化为对角阵，也就是简化成了一维向量</strong>。这样，均值和方差就都可以用全连接网络来获得了。</p>
+</blockquote>
+<p><strong>解码器（p (x|z)）</strong></p>
+<p>模型假设 p (x|z) 具有固定的高斯协方差。函数 f 定义关于 z 的高斯分布均值，f 由神经网络建模。</p>
+<p>通过将编码器和解码器部分串联在一起，可以获得总体架构。但是，在训练过程中，我们仍然需要对从编码器返回的分布中进行采样非常小心。因为采样过程必须以允许误差通过网络反向传播。优化过程依赖从编码器获得的分布中采样，但其实采样操作是不可导的！(无法梯度下降)</p>
+<p>尽管有随机采样发生在模型的中间，但有一个简单的称为<strong>重参数化技巧（reparametrisation trick）</strong>，使梯度下降成为可能。它利用以下事实：如果 z 有均值 g (x) 与协方差 h (x) 的高斯分布的随机变量，则 z 可表示为：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>z</mi><mo>=</mo><mi>h</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mi>ζ</mi><mo>+</mo><mi>g</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>ζ</mi><mo>∼</mo><mi>N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>I</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">z=h(x)\zeta + g(x), \zeta \sim N(0,I)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mord mathnormal" style="margin-right:0.07378em;">ζ</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.07378em;">ζ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">)</span></span></span></span></span></p>
+<blockquote>
+<p>从一个标准分布中采样，进而对均值和方差进行反向传播。相比要直接从自然分布中采样，由可导变为了不可导；</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">pro1(x)</span><br><span class="line">pro2&#123;g&#125;</span><br><span class="line">pro3(h)</span><br><span class="line">pro4&#123;N&#125;</span><br><span class="line">pro5(z)</span><br><span class="line">pro6(f)</span><br><span class="line">pro7(x生成)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pro1 --编码--&gt; pro2</span><br><span class="line">pro1 --编码--&gt; pro3</span><br><span class="line">pro2 --均值--&gt; pro5</span><br><span class="line">pro3 --方差--&gt; pro5</span><br><span class="line">pro4 --标准正态分布--&gt; pro5</span><br><span class="line">pro5 --解码--&gt; pro6</span><br><span class="line">pro6 --解码--&gt; pro7</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">classDef default fill: #EEE8AA, stroke: #333, stroke-width: 4px;</span><br><span class="line">classDef distribution fill:#FF6347,  stroke: #333, stroke-width: 4px;</span><br><span class="line"></span><br><span class="line">class pro2 distribution</span><br><span class="line">class pro3 distribution</span><br><span class="line">class pro6 distribution</span><br><span class="line">class pro4 distribution</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>VAE（<s>抽象版</s>）</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>l</mi><mi>o</mi><mi>s</mi><mi>s</mi><mo>=</mo><mi>C</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><msup><mi mathvariant="normal">∣</mi><mn>2</mn></msup><mo>+</mo><mi>K</mi><mi>L</mi><mo stretchy="false">[</mo><mi>N</mi><mo stretchy="false">(</mo><mi>g</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>h</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>I</mi><mo stretchy="false">)</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">loss=C|x-f(z)|^2 + KL[N(g(x), h(x)), N(0,I)]
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal">s</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mord"><span class="mord">∣</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal">L</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">)</span><span class="mclose">]</span></span></span></span></span></p>
+<h2 id="参考"><a class="markdownIt-Anchor" href="#参考">#</a> 参考</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly90b3dhcmRzZGF0YXNjaWVuY2UuY29tL2JheWVzaWFuLWluZmVyZW5jZS1wcm9ibGVtLW1jbWMtYW5kLXZhcmlhdGlvbmFsLWluZmVyZW5jZS0yNWE4YWE5YmNlMjk=">https://towardsdatascience.com/bayesian-inference-problem-mcmc-and-variational-inference-25a8aa9bce29</span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xNjM3NDM5">https://cloud.tencent.com/developer/article/1637439</span></p>
+
+      <div class="tags">
+          <a href="/tags/Mechine-learning/" rel="tag"><i class="ic i-tag"></i> Mechine learning</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2024-12-24 16:17:14" itemprop="dateModified" datetime="2024-12-24T16:17:14+08:00">2024-12-24</time>
+  </span>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>jkfo <i class="ic i-at"><em>@</em></i>jkfo-notebook
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2024/12/24/VAE/" title="VAE">http://example.com/2024/12/24/VAE/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2024/12/24/hello-world/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;www.loliapi.com&#x2F;acg&#x2F;pc&#x2F;?957472" title="Hello World">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>Hello World</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2024/12/24/GWAS/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;www.loliapi.com&#x2F;acg&#x2F;pc&#x2F;?190605" title="GWAS-1">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> GWAS</span>
+  <h3>GWAS-1</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vae"><span class="toc-number">1.</span> <span class="toc-text"> VAE</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%8D%E7%BB%B4"><span class="toc-number">1.1.</span> <span class="toc-text"> 降维</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%99%8D%E7%BB%B4"><span class="toc-number">1.1.1.</span> <span class="toc-text"> 什么是降维？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pca"><span class="toc-number">1.2.</span> <span class="toc-text"> PCA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text"> 自编码器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E5%88%86%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8vae"><span class="toc-number">1.4.</span> <span class="toc-text"> 变分自编码器（VAE）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vae-%E6%95%B0%E5%AD%A6%E7%BB%86%E8%8A%82"><span class="toc-number">1.5.</span> <span class="toc-text"> VAE 数学细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.6.</span> <span class="toc-text"> 参考</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li class="active"><a href="/2024/12/24/VAE/" rel="bookmark" title="VAE">VAE</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="jkfo"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">jkfo</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">10</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">7</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">7</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL2prZm8wMDI=" title="https:&#x2F;&#x2F;github.com&#x2F;jkfo002"><i class="ic i-github"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+        
+  <li class="item dropdown">
+      <a href="javascript:void(0);"><i class="ic i-feather"></i>Posts</a>
+    <ul class="submenu">
+
+        
+  <li class="item">
+    <a href="/archives/" rel="section"><i class="ic i-list-alt"></i>Archives</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/categories/" rel="section"><i class="ic i-th"></i>Categories</a>
+  </li>
+
+        
+  <li class="item">
+    <a href="/tags/" rel="section"><i class="ic i-tags"></i>Tags</a>
+  </li>
+
+  </ul>
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2024/12/24/hello-world/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2024/12/24/GWAS/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Bioinformatics/" title="In Bioinformatics">Bioinformatics</a>
+<i class="ic i-angle-right"></i>
+<a href="/categories/Bioinformatics/BSA/" title="In BSA">BSA</a>
+</div>
+
+    <span><a href="/2024/12/24/DeepBSA-install/" title="DeepBSA-install">DeepBSA-install</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Bioinformatics/" title="In Bioinformatics">Bioinformatics</a>
+<i class="ic i-angle-right"></i>
+<a href="/categories/Bioinformatics/Evolution/" title="In Evolution">Evolution</a>
+</div>
+
+    <span><a href="/2024/12/24/PCMs/" title="PCMs">PCMs</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Tips/" title="In Tips">Tips</a>
+</div>
+
+    <span><a href="/2024/12/24/readthedocs/" title="readthedocs">readthedocs</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Bioinformatics/" title="In Bioinformatics">Bioinformatics</a>
+<i class="ic i-angle-right"></i>
+<a href="/categories/Bioinformatics/Algorithm/" title="In Algorithm">Algorithm</a>
+</div>
+
+    <span><a href="/2024/12/24/Tau/" title="Tau">Tau</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Bioinformatics/" title="In Bioinformatics">Bioinformatics</a>
+<i class="ic i-angle-right"></i>
+<a href="/categories/Bioinformatics/Evolution/" title="In Evolution">Evolution</a>
+</div>
+
+    <span><a href="/2024/12/24/sPLS-DA/" title="sPLS-DA">sPLS-DA</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Mechine-learning/" title="In Mechine learning">Mechine learning</a>
+</div>
+
+    <span><a href="/2024/12/24/VAE/" title="VAE">VAE</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Tips/" title="In Tips">Tips</a>
+</div>
+
+    <span><a href="/2024/12/24/hexo-config/" title="hexo-config">hexo-config</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2024/12/24/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Tips/" title="In Tips">Tips</a>
+</div>
+
+    <span><a href="/2024/12/24/git/" title="git">git</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Bioinformatics/" title="In Bioinformatics">Bioinformatics</a>
+<i class="ic i-angle-right"></i>
+<a href="/categories/Bioinformatics/GWAS/" title="In GWAS">GWAS</a>
+</div>
+
+    <span><a href="/2024/12/24/GWAS/" title="GWAS-1">GWAS-1</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">jkfo @ JKFO001</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2024/12/24/VAE/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,copy_tex: true,
+    katex: true,mermaid: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
